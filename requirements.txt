@@ -1,0 +1,12 @@
+streamlit
+pandas
+jinja2
+xlsxwriter
+openpyxl
+gspread
+google-api-python-client
+oauth2client
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-cloud-storage

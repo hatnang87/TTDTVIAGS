@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Báo cáo kết quả đào tạo 5b</title>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin-top: 15mm;
+            margin-bottom: 15mm;
+            margin-left: 20mm;
+            margin-right: 15mm;
+        }
+        body {
+            font-family: "Times New Roman", serif;
+            font-size: 18px;
+            margin: 0;
+        }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { font-size: 18px; text-align: center; font-weight: normal;}
+        .header-table td { border: 1px solid black; vertical-align: middle; padding: 4px; }
+        .info { margin: 14px 0; line-height: 1.6; font-size: 18px; }
+        .sign-table td { height: 110px; vertical-align: top; padding: 8px 12px; font-size: 18px; border: 1px solid black; }
+        
+        .signature { margin-top: 12px; }
+        .result-table, .result-table th, .result-table td { border: 1px solid black; line-height: 1.6; border-collapse: collapse; }
+        .result-table { border-right: 1px solid black; border-bottom: 1px solid black; }
+        .result-table:last-of-type, .result-table[style*="border-bottom:none"] { border-bottom: none !important; }
+        .sign-table, .sign-table td { border: 1px solid black; border-collapse: collapse; }
+        .sign-table { border-top: none !important; }
+        .sign-table tr:first-child td { border-top: none !important;}
+        .result-table tr { page-break-inside: avoid !important; break-inside: avoid !important; }
+        @media print {
+            button, .no-print, .stApp, .st-emotion-cache-1kyxreq, .st-emotion-cache-1avcm0n { display: none !important; }
+            body { margin: 0; }
+            html, body { width: 210mm; height: 297mm; }
+            .footer-signature { page-break-inside: avoid; break-inside: avoid; }
+            .result-table, .result-table th, .result-table td { border: 1px solid black !important; border-collapse: collapse; }
+            .result-table { border-right: 1px solid black !important; border-bottom: 1px solid black !important; }
+            .sign-table, .sign-table td { border: 1px solid black !important; border-collapse: collapse; }
+            .sign-table { border-top: none !important; border-top-width: 0 !important;}
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<table class="header-table" style="width:100%;">
+  <tr>
+    <!-- Logo VIAGS -->
+    <td style="width: 28%; text-align: center; vertical-align: middle;">
+      <img src="data:image/png;base64,{{ logo_base64 }}" style="width: 170px; display: block; margin: 0 auto;">
+    </td>
+    <!-- Ô giữa: Biểu mẫu sát trên, KẾT QUẢ ĐÀO TẠO căn giữa -->
+    <td style="width: 46%; position: relative; vertical-align: top; padding:0;">
+      <table style="width:100%; border:none; border-collapse:collapse; height:100%;">
+        <tr style="height: 1px;">
+          <td style="border:none; padding:4px 0 0 8px; font-style:italic; font-size:16px; text-align:left; vertical-align:top;">
+            Biểu mẫu
+          </td>
+        </tr>
+        <tr>
+          <td style="border:none; padding:0; height:92px; position:relative;">
+            <div style="font-size:22px; font-weight:bold; text-align:center; position:absolute; top:50%; left:0; width:100%; transform:translateY(-50%);">
+              KẾT QUẢ ĐÀO TẠO
+            </div>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <!-- Mã số...: 4 dòng, căn lề trái, mỗi dòng có border -->
+    <td style="width: 24%; padding:0; vertical-align: top;">
+      <table style="width:100%; border-collapse:collapse; height:56px;">
+        <tr>
+          <td style="border-bottom:1px solid black; border-left:none; border-right:none; border-top:none; font-size:18px; padding:2px 6px; text-align:left; line-height:1.1;">
+            Mã số: V.TMM-F05b
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom:1px solid black; border-left:none; border-right:none; border-top:none; font-size:18px; padding:2px 6px; text-align:left; line-height:1.1;">
+            Ban hành: 04
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom:1px solid black; border-left:none; border-right:none; border-top:none; font-size:18px; padding:2px 6px; text-align:left; line-height:1.1;">
+            Hiệu lực: 28/12/2024
+          </td>
+        </tr>
+        <tr>
+          <td style="border:none; font-size:18px; padding:2px 6px; text-align:left; line-height:1.1;">
+            Trang: 1/1
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- THÔNG TIN LỚP -->
+<div class="info">
+  <div><span style="font-weight:bold;">- Môn/Khóa học:</span> {{ course_name }}</div>
+  <div><span style="font-weight:bold;">- Loại hình/hình thức đào tạo:</span> {{ training_type }}</div>
+  <div><span style="font-weight:bold;">- Thời gian:</span> {{ time }}</div>
+  <div><span style="font-weight:bold;">- Địa điểm:</span> {{ location }}</div>
+  <div><span style="font-weight:bold;">- Số học viên tham dự/tổng số học viên:</span> {{ num_attended }}/{{ num_total }}{% if class_code %} ({{ class_code }}){% endif %}
+
+</div>
+</div>
+
+<!-- BẢNG KẾT QUẢ 5b -->
+<table class="result-table" style="width:100%;">
+  <style>
+    th, td {
+      padding: {% if num_total <= 10 %}6px 10px{% else %}4px 4px{% endif %};
+    }
+  </style>
+  <thead>
+    <tr>
+      <th rowspan="2" style="width:5%;">Stt</th>
+      <th rowspan="2" style="width:12%;">Mã<br>nhân viên</th>
+      <th rowspan="2" style="width:25%;">Họ tên</th>
+      <th rowspan="2" style="width:12%;">Đơn vị</th>
+      <th colspan="3">Điểm</th>
+      <th rowspan="2" style="width:11%;">Xếp loại</th>
+      <th rowspan="2">Ghi chú</th>
+    </tr>
+    <tr>
+      <th style="width:6%;">LT</th>
+      <th style="width:6%;">TH<br>(x2)</th>
+      <th style="width:6%;">Trung<br>bình</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for student in students[:-1] %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td style="width:80px; max-width:80px; word-break:break-all; white-space:normal;">{{ student.id }}</td>
+      <td style="text-align:left; padding-left:4px;">{{ student.name }}</td>
+      <td>{{ student.unit }}</td>
+      <td>{{ student.score_lt }}</td>
+      <td>{{ student.score_th }}</td>
+      <td>{{ student.score_tb }}</td>
+      <td>{{ student.rank }}</td>
+      <td style="text-align:left; padding-left:4px;">{{ student.note }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  {% if students|length > 0 %}
+  <tbody class="footer-signature" style="page-break-inside: avoid;">
+    <tr>
+      <td>{{ students|length }}</td>
+      <td style="width:80px; max-width:80px; word-break:break-all; white-space:normal;">{{ students[-1].id }}</td>
+      <td style="text-align:left; padding-left:4px;">{{ students[-1].name }}</td>
+      <td>{{ students[-1].unit }}</td>
+      <td>{{ students[-1].score_lt }}</td>
+      <td>{{ students[-1].score_th }}</td>
+      <td>{{ students[-1].score_tb }}</td>
+      <td>{{ students[-1].rank }}</td>
+      <td style="text-align:left; padding-left:4px;">{{ students[-1].note }}</td>
+    </tr>
+    <!-- BẢNG CHỮ KÝ FORMAT CHUẨN -->
+    <table class="sign-table signature" style="width:100%; border-top:none; margin-top:0; page-break-inside: avoid; break-inside: avoid;">
+      <tr>
+        <td style="width: 33.33%; text-align: left; vertical-align: top; height:160px; border-top:none; padding: 8px 12px; position:relative;">
+          Giáo viên hướng dẫn:
+          <div style="position:absolute; left:8px; right:8px; bottom:10px;">
+            Họ tên: {{ gv_huong_dan|default('Nguyễn Đức Nghĩa') }}<br>
+            Ngày:
+          </div>
+        </td>
+        <td style="width: 33.33%; text-align: left; vertical-align: top; height:160px; border-top:none; padding: 8px 12px; position:relative;">
+          Trưởng bộ môn:
+          <div style="position:absolute; left:8px; right:8px; bottom:10px;">
+            Họ tên: {{ truong_bo_mon|default('Ngô Trung Thành') }}<br>
+            Ngày:
+          </div>
+        </td>
+        <td style="width: 33.33%; text-align: left; vertical-align: top; height:160px; border-top:none; padding: 8px 12px; position:relative;">
+          Trưởng TTĐT:
+          <div style="position:absolute; left:8px; right:8px; bottom:10px;">
+            Họ tên: {{ truong_tt|default('Nguyễn Chí Kiên') }}<br>
+            Ngày:
+          </div>
+        </td>
+      </tr>
+    </table>
+  </tbody>
+  {% endif %}
+</table>
+
+
+</body>
+</html>
+<!-- END OF REPORT -->
