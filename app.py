@@ -133,6 +133,9 @@ for key, default in [
 # ==== Chuẩn bị biến tạm cho cơ chế lưu khi chuyển tab ====
 if "active_tab" not in st.session_state:
     st.session_state["active_tab"] = "1️⃣ Thông tin lớp học"
+if "show_nhap_nhieu_lop" not in st.session_state:
+    st.session_state["show_nhap_nhieu_lop"] = False
+
 
 # ========== HELPER FUNCTIONS ==========
 def chuan_hoa_thoi_gian(time_str):
@@ -318,9 +321,17 @@ def nhap_nhieu_lop_excel_modal():
             st.session_state["hien_nhap_excel"] = False
             st.rerun()
    
-# ========== UI: Expander nhập nhiều lớp ==========
-with st.expander("📥 Nhập nhiều lớp từ file Excel (mỗi sheet 1 lớp)", expanded=False):
+# ========== UI: nhập nhiều lớp ==========
+col_btn, col_empty = st.columns([1, 5])
+with col_btn:
+    if st.button("📥 Nhập nhiều lớp từ file Excel (nâng cao)", use_container_width=True):
+        st.session_state["show_nhap_nhieu_lop"] = True
+
+if st.session_state["show_nhap_nhieu_lop"]:
+    st.info("Đang mở giao diện nhập nhiều lớp...")
     nhap_nhieu_lop_excel_modal()
+    # Khi đóng modal (bạn đã có nút hủy trong modal)
+
 
 # ========== UI: Quản lý nhiều lớp ==========
 ds_lop = sorted(list(st.session_state["danh_sach_lop"].keys()), key=strip_accents)
